@@ -1,7 +1,3 @@
-<?php
-        session_start();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,68 +32,42 @@
                 </div>
         </nav>
         <!--formulaire-->
-        <h1>Ajouter un jeu</h1>
+        <h1>S'enregistrer</h1>
 
-        <form action="new-game.php" method="POST">
+        <form action="register.php" method="POST">
                 <div>
-                        <label for="">Nom du jeu</label>
-                        <input type="text" name="nom">
+                        <label for="">Username</label>
+                        <input type="text" name="username">
                 </div>
                 <div>
-                        <label for="">Possesseur</label>
-                        <input type="text" name="possesseur">
+                        <label for="">Mot de passe</label>
+                        <input type="text" name="password">
                 </div>
-                <div>
-                        <label for="">Prix</label>
-                        <input type="number" name="prix">
-                </div>
-                <div>
-                        <label for="">Nombre de joueurs</label>
-                        <input type="number" name="nbr">
-                </div>
-                <div>
-                        <label for="">Commentaire</label>
-                        <input type="text" name="commentaire">
-                </div>
-                <div>
-                        <label for="">Console</label>
-                        <input type="text" name="console">
-                </div>
+           
 
                 <div>
                         <button type="submit">Envoyer</button>
                 </div>
         </form>
+        <a href="/user/login.php">LOGIN</a>
 </body>
 
 </html>
 
 <?php
 
-if (
-        isset($_POST['nom']) &&
-        // isset($_POST['possesseur']) &&
-        isset($_POST['console']) &&
-        isset($_POST['prix']) &&
-        isset($_POST['nbr']) &&
-        isset($_POST['commentaire'])
 
-) {
-        $nom = $_POST['nom'];
-        $possesseur = $_SESSION['isAuth'];
-        $console = $_POST['console'];
-        $prix = $_POST['prix'];
-        $nbr = $_POST['nbr'];
-        $commentaires = $_POST['commentaire'];
+if (isset($_POST['username']) && isset($_POST['password']) ) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-        include './utils/db.php';
+   
+    include '../utils/db.php';
 
-        $sql = "INSERT INTO
-         jeux_video(nom, possesseur,console,prix, nbre_joueurs_max,commentaires)
-        VALUES ('$nom', '$possesseur', '$console', '$prix', '$nbr', '$commentaires')";
+    $sql = "INSERT INTO users(username, password) VALUES ('$username', '$password')";
 
 
-        include './utils/errorsHandler.php';
+    include '../utils/errorsHandler.php';
 
-        header('Location: /jeux/index.php');
+    header('Location: /jeux/user/login.php');
 }
